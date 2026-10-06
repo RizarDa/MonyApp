@@ -12,8 +12,10 @@ source.include_exts = py,png,jpg,kv,atlas,json
 requirements = python3,kivy,plyer
 
 orientation = portrait
-
 fullscreen = 0
+
+android.api = 35
+android.minapi = 24
 
 android.permissions = android.permission.POST_NOTIFICATIONS
 
