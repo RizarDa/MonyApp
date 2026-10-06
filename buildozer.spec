@@ -4,6 +4,8 @@ title = Money Manager
 package.name = moneyapp
 package.domain = org.abolfazl
 
+version = 1.0
+
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,json
 
