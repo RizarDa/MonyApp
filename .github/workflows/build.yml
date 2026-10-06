@@ -14,15 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build APK
-        uses: ArtemSBulgakov/buildozer-action@v1.2.0
-        id: buildozer
+      - name: Build APK with Buildozer
+        uses: addnab/docker-run-action@v3
         with:
-          command: buildozer android debug
-          buildozer_version: stable
+          image: kivy/buildozer:latest
+          options: -v ${{ github.workspace }}:/home/user/hostcwd
+          run: |
+            buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: MoneyApp-APK
-          path: ${{ steps.buildozer.outputs.filename }}
+          path: bin/*.apk
