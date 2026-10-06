@@ -17,7 +17,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v7
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
       - name: Setup Java
         uses: actions/setup-java@v6
@@ -31,12 +31,15 @@ jobs:
       - name: Install Buildozer
         run: |
           python -m pip install --upgrade pip
-          pip install .
+          pip install buildozer setuptools cython==0.29.34
 
-      - name: Prepare Android SDK and NDK
+      - name: Show Buildozer version
+        run: |
+          buildozer --version
+
+      - name: Prepare Android SDK, NDK and p4a
         run: |
           sed -i.bak "s/# android.accept_sdk_license = False/android.accept_sdk_license = True/" buildozer.spec
-          sed -i.bak "s/#p4a.branch = master/p4a.branch = develop/" buildozer.spec
           buildozer android p4a -- --help
 
       - name: Install Linux dependencies
