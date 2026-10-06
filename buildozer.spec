@@ -16,10 +16,11 @@ fullscreen = 0
 
 android.api = 35
 android.minapi = 24
-
-android.permissions = android.permission.POST_NOTIFICATIONS
+android.ndk_api = 24
 
 android.archs = arm64-v8a
+
+android.permissions = android.permission.POST_NOTIFICATIONS
 
 android.accept_sdk_license = True
 
