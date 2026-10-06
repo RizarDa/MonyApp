@@ -33,14 +33,40 @@ jobs:
           python -m pip install --upgrade pip
           pip install buildozer setuptools cython==0.29.34
 
-      - name: Show Buildozer version
+      - name: Show versions
         run: |
+          python --version
+          java -version
           buildozer --version
 
-      - name: Prepare Android SDK, NDK and p4a
+      - name: Prepare Android SDK
         run: |
           sed -i.bak "s/# android.accept_sdk_license = False/android.accept_sdk_license = True/" buildozer.spec
           buildozer android p4a -- --help
+
+      - name: Install Android Build Tools
+        run: |
+          SDK="$HOME/.buildozer/android/platform/android-sdk"
+
+          echo "SDK = $SDK"
+
+          find "$SDK" -maxdepth 3 -type f -name sdkmanager -print
+
+          SDKMANAGER=$(find "$SDK" -type f -name sdkmanager | head -n 1)
+
+          echo "SDKMANAGER = $SDKMANAGER"
+
+          chmod +x "$SDKMANAGER"
+
+          yes | "$SDKMANAGER" --licenses || true
+
+          "$SDKMANAGER" "platform-tools" "platforms;android-35" "build-tools;35.0.1"
+
+          echo "Installed Build Tools:"
+          ls -la "$SDK/build-tools"
+
+          echo "Checking aidl:"
+          find "$SDK/build-tools" -name aidl -type f -print
 
       - name: Install Linux dependencies
         run: |
